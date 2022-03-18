@@ -57,7 +57,7 @@ function ssa_lb_maybe_prevent_booking( $new_appointment_data ) {
     $upcoming_appointments_for_customer = array_filter( $upcoming_appointments_for_customer, function( $appointment ) use ( $new_appointment_data, $maximum_per_period, $period_date_format, $period_label, $start_date_user_is_trying_to_book ) {
         // $separate_by_appoinment_type = true; // Should each appointment type count its limit separately?
         // if ( $separate_by_appoinment_type  && $appointment['appointment_type_id'] != $new_appointment_data['appointment_type_id'] ) {
-        //     return false;
+        //     return false; // if we are counting each appointment type separately, filter out any appointments this customer has belonging to other appointment types
         // }
 
         // Insert custom logic for advanced filtering here
