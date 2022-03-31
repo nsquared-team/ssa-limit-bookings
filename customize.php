@@ -40,11 +40,17 @@ function ssa_lb_maybe_prevent_booking( $new_appointment_data ) {
     if ( empty( $new_appointment_data['customer_id'] ) ) {
         return $new_appointment_data;
     }
+    
+    if ( ! in_array( $new_appointment_data['appointment_type_id'], array(
+        44, // Sponsored Development Check-Ins
+    ) ) ) {
+        return $new_appointment_data;
+    }
 
-    $maximum_per_period = 4; // Limit customers to 4 appointments (across all appointment types)
+    $maximum_per_period = 1; // Limit customers to X appointments (across all appointment types)
     $period_date_format = 'n'; // per calendar month
     $period_label = 'month'; // label shown to customer in error messages
-    $error_message = sprintf( __('You are limited to %d %s per %s', 'simply-schedule-appointments'), $maximum_per_period, (($maximum_per_period <= 1) ? 'appointment' : 'appointments'), $period_label );
+    $error_message = sprintf( __('This appointment type is limited to %d %s per %s', 'simply-schedule-appointments'), $maximum_per_period, (($maximum_per_period <= 1) ? 'appointment' : 'appointments'), $period_label );
     
     // query appointments for this customer
     $customer_id = $new_appointment_data['customer_id'];
